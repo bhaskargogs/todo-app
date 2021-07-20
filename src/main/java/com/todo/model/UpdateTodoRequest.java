@@ -1,4 +1,4 @@
-package com.todo.dto;
+package com.todo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

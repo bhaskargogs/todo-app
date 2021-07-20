@@ -1,4 +1,4 @@
-package com.todo.model;
+package com.todo.entity;
 
 import com.todo.type.TodoStatus;
 import lombok.AccessLevel;
