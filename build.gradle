@@ -19,12 +19,45 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.5.2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.jayway.jsonpath:json-path:2.6.0'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.1'
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testImplementation 'com.konghq:unirest-java:3.8.00'
+    testImplementation 'io.cucumber:cucumber-java:6.1.2'
+    testImplementation 'io.cucumber:cucumber-junit:6.1.2'
+    testImplementation 'io.cucumber:cucumber-core:6.1.2'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.0'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.junit.jupiter:junit-jupiter-params:5.6.1'
+    testCompileOnly 'org.mockito:mockito-core:3.3.3'
+    testCompileOnly 'org.mockito:mockito-junit-jupiter:3.3.3'
+
+    components {
+        withModule('org.springframework:spring-beans') {
+            allVariants {
+                withDependencyConstraints {
+                    // Need to patch constraints because snakeyaml is an optional dependency
+
+                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
+                }
+            }
+        }
+    }
 }
 
 test {
