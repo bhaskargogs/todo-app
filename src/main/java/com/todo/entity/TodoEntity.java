@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @Table
 @Entity(name = "todo")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Todo {
+public class TodoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,14 +45,14 @@ public class Todo {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-YYYY HH:mm")
     private OffsetDateTime updatedDate;
 
-    public Todo(Long id, String description, TodoStatus status, OffsetDateTime dueDate) {
+    public TodoEntity(Long id, String description, TodoStatus status, OffsetDateTime dueDate) {
         this.id = id;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
     }
 
-    public Todo(String description, OffsetDateTime createdDate, TodoStatus status, OffsetDateTime dueDate, OffsetDateTime updatedDate) {
+    public TodoEntity(String description, OffsetDateTime createdDate, TodoStatus status, OffsetDateTime dueDate, OffsetDateTime updatedDate) {
         this.description = description;
         this.createdDate = createdDate;
         this.status = status;
