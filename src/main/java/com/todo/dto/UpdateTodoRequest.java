@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateTodoDTO {
+public class UpdateTodoRequest {
 
     @NotNull(message = "ID must not be null")
     private Long id;

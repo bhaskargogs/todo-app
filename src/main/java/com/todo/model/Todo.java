@@ -1,7 +1,9 @@
 package com.todo.model;
 
 import com.todo.type.TodoStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +12,7 @@ import java.time.OffsetDateTime;
 
 @Table
 @Entity(name = "todo")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Todo {
 
     @Id
@@ -42,8 +45,6 @@ public class Todo {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-YYYY HH:mm")
     private OffsetDateTime updatedDate;
 
-    protected Todo(){}
-
     public Todo(Long id, String description, TodoStatus status, OffsetDateTime dueDate) {
         this.id = id;
         this.description = description;
@@ -58,4 +59,5 @@ public class Todo {
         this.dueDate = dueDate;
         this.updatedDate = updatedDate;
     }
+
 }

@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TodoDTO {
+public class TodoResponse {
     private Long id;
     private String description;
     private OffsetDateTime dueDate;

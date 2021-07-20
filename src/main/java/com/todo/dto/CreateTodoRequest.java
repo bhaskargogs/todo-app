@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTodoDTO {
+public class CreateTodoRequest {
 
     @NotNull(message = "Description must not be null")
     private String description;
