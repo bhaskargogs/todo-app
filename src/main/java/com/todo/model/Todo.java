@@ -1,5 +1,6 @@
 package com.todo.model;
 
+import com.todo.type.TodoStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,9 @@ public class Todo {
     private OffsetDateTime createdDate;
 
     @Getter
+    private TodoStatus status;
+
+    @Getter
     @Column(name = "due_date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-YYYY HH:mm")
     private OffsetDateTime dueDate;
@@ -40,15 +44,17 @@ public class Todo {
 
     protected Todo(){}
 
-    public Todo(Long id, String description, OffsetDateTime dueDate) {
+    public Todo(Long id, String description, TodoStatus status, OffsetDateTime dueDate) {
         this.id = id;
         this.description = description;
+        this.status = status;
         this.dueDate = dueDate;
     }
 
-    public Todo(String description, OffsetDateTime createdDate, OffsetDateTime dueDate, OffsetDateTime updatedDate) {
+    public Todo(String description, OffsetDateTime createdDate, TodoStatus status, OffsetDateTime dueDate, OffsetDateTime updatedDate) {
         this.description = description;
         this.createdDate = createdDate;
+        this.status = status;
         this.dueDate = dueDate;
         this.updatedDate = updatedDate;
     }
