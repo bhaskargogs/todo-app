@@ -1,0 +1,18 @@
+version: '3.7'
+networks:
+  todo-net:
+    driver: bridge
+
+services:
+  server:
+    container_name: todo-server
+    build:
+      context: .
+      args:
+        DEPLOYMENT_ENV: local
+        JAR_FILE: build/libs/*.jar
+    ports:
+      - 8081:8081
+    restart: always
+    networks:
+      - todo-net

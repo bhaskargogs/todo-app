@@ -28,7 +28,7 @@ public class TodoService {
             response = mapper.map(entity, TodoResponse.class);
             response.setId(entity.getId());
         } catch (InvalidConstraintException e) {
-            throw new InvalidConstraintException();
+            throw new InvalidConstraintException("TodoService.create(): Invalid Constraints - " + e.getMessage());
         }
         return response;
     }

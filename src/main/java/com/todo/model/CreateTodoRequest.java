@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
 
 @Data
@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class CreateTodoRequest {
 
-    @NotNull(message = "Description must not be null")
+    @NotBlank(message = "Description must not be Blank")
     private String description;
 
     private OffsetDateTime dueDate;

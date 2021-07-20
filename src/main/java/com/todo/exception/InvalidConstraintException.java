@@ -1,6 +1,8 @@
 package com.todo.exception;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
-
 public class InvalidConstraintException extends RuntimeException {
+
+    public InvalidConstraintException(String message) {
+        super(message);
+    }
 }
