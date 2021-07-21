@@ -1,5 +1,6 @@
 package com.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,8 @@ public class UpdateTodoRequest {
     @NotBlank(message = "Description must not be null")
     private String description;
 
-    @FutureOrPresent(message = "Due date must be future or present")
+    @FutureOrPresent(message = "Due Date must be present or Future")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dueDate;
 
-    @NotBlank(message = "status must not be null")
-    private String status;
 }

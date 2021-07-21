@@ -17,7 +17,7 @@ public class CreateTodoRequest {
     @NotBlank(message = "Description must not be Blank")
     private String description;
 
-    @FutureOrPresent(message = "dueDate must be present or Future")
+    @FutureOrPresent(message = "Due Date must be present or Future")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dueDate;
 

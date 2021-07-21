@@ -5,17 +5,19 @@ import com.todo.exception.InvalidConstraintException;
 import com.todo.exception.NotFoundException;
 import com.todo.model.CreateTodoRequest;
 import com.todo.model.TodoResponse;
+import com.todo.model.UpdateTodoRequest;
+import com.todo.model.UpdateTodoStatusRequest;
 import com.todo.repository.TodoRepository;
 import com.todo.type.TodoStatus;
+import com.todo.util.TodoUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.lang.String.valueOf;
 
 @Service
 @RequiredArgsConstructor
@@ -39,27 +41,40 @@ public class TodoService {
     }
 
     public TodoResponse findById(Long id) {
-        return mapper.map(findTodoById(id)
-                .orElseThrow(() -> new NotFoundException("id", String.valueOf(id))), TodoResponse.class);
+        return mapper.map(TodoUtils.findTodoById(repository, id)
+                .orElseThrow(() -> new NotFoundException("id", valueOf(id))), TodoResponse.class);
     }
 
     public List<TodoResponse> findAllTodos() {
-        return findList(repository.findAll());
+        return TodoUtils.findList(mapper, repository.findAll());
     }
 
     public List<TodoResponse> findByStatus(TodoStatus status) {
-        return findList(repository.findByStatus(status));
+        return TodoUtils.findList(mapper, repository.findByStatus(status));
     }
 
-    private List<TodoResponse> findList(List<TodoEntity> entities) {
-        return entities.isEmpty() ? new ArrayList<TodoResponse>()
-                : entities
-                .stream()
-                .map(todo -> mapper.map(todo, TodoResponse.class))
-                .collect(Collectors.toList());
+    public TodoResponse updateStatusOrRequest(Long id, UpdateTodoStatusRequest updateTodoStatusRequest, UpdateTodoRequest updateTodoRequest) {
+        TodoEntity entityToUpdate = repository.getById(id);
+        TodoResponse updatedResponse;
+        try {
+            if (entityToUpdate.getStatus().equals(TodoStatus.PAST_DUE)) {
+                throw new InvalidConstraintException("status", valueOf(entityToUpdate.getStatus()));
+            }
+
+            if (updateTodoStatusRequest == null) {
+                entityToUpdate = new TodoEntity(id, updateTodoRequest.getDescription(), entityToUpdate.getCreatedDate(),
+                        entityToUpdate.getStatus(), updateTodoRequest.getDueDate(), LocalDateTime.now());
+            } else {
+                entityToUpdate = new TodoEntity(id, entityToUpdate.getDescription(), entityToUpdate.getCreatedDate(),
+                        TodoStatus.valueOf(TodoStatus.class, updateTodoStatusRequest.getStatus()), entityToUpdate.getDueDate(), LocalDateTime.now());
+            }
+
+            entityToUpdate = repository.save(entityToUpdate);
+            updatedResponse = mapper.map(entityToUpdate, TodoResponse.class);
+        } catch (InvalidConstraintException e) {
+            throw new InvalidConstraintException("TodoService.update(): Invalid Constraints - " + e.getMessage());
+        }
+        return updatedResponse;
     }
 
-    private Optional<TodoEntity> findTodoById(Long id) {
-        return repository.findById(id);
-    }
 }

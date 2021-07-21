@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Table
 @Entity(name = "todo")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class TodoEntity {
 
     @Id
@@ -45,14 +45,19 @@ public class TodoEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime updatedDate;
 
-    public TodoEntity(Long id, String description, TodoStatus status, LocalDateTime dueDate) {
+
+    public TodoEntity(Long id, String description, LocalDateTime createdDate,
+                      TodoStatus status, LocalDateTime dueDate, LocalDateTime updatedDate) {
         this.id = id;
         this.description = description;
+        this.createdDate = createdDate;
         this.status = status;
         this.dueDate = dueDate;
+        this.updatedDate = updatedDate;
     }
 
-    public TodoEntity(String description, LocalDateTime createdDate, TodoStatus status, LocalDateTime dueDate, LocalDateTime updatedDate) {
+    public TodoEntity(String description, LocalDateTime createdDate, TodoStatus status,
+                      LocalDateTime dueDate, LocalDateTime updatedDate) {
         this.description = description;
         this.createdDate = createdDate;
         this.status = status;
