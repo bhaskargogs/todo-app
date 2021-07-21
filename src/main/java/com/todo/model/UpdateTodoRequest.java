@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class UpdateTodoRequest {
     private String description;
 
     @FutureOrPresent(message = "Due date must be future or present")
-    private OffsetDateTime dueDate;
+    private LocalDateTime dueDate;
 
     @NotBlank(message = "status must not be null")
     private String status;

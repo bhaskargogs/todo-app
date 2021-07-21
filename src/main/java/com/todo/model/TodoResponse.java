@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 public class TodoResponse {
     private Long id;
     private String description;
-    private OffsetDateTime dueDate;
-    private OffsetDateTime updatedDate;
+    private String status;
+    private LocalDateTime dueDate;
+    private LocalDateTime updatedDate;
 }
