@@ -53,21 +53,16 @@ public class TodoService {
         return TodoUtils.findList(mapper, repository.findByStatus(status));
     }
 
-    public TodoResponse updateStatusOrRequest(Long id, UpdateTodoStatusRequest updateTodoStatusRequest, UpdateTodoRequest updateTodoRequest) {
+    public TodoResponse update(Long id, UpdateTodoRequest updateTodoRequest) {
         TodoEntity entityToUpdate = repository.getById(id);
         TodoResponse updatedResponse;
         try {
             if (entityToUpdate.getStatus().equals(TodoStatus.PAST_DUE)) {
                 throw new InvalidConstraintException("status", valueOf(entityToUpdate.getStatus()));
             }
+            entityToUpdate = new TodoEntity(id, updateTodoRequest.getDescription(), entityToUpdate.getCreatedDate(),
+                    TodoStatus.valueOf(TodoStatus.class, updateTodoRequest.getStatus()), updateTodoRequest.getDueDate(), LocalDateTime.now());
 
-            if (updateTodoStatusRequest == null) {
-                entityToUpdate = new TodoEntity(id, updateTodoRequest.getDescription(), entityToUpdate.getCreatedDate(),
-                        entityToUpdate.getStatus(), updateTodoRequest.getDueDate(), LocalDateTime.now());
-            } else {
-                entityToUpdate = new TodoEntity(id, entityToUpdate.getDescription(), entityToUpdate.getCreatedDate(),
-                        TodoStatus.valueOf(TodoStatus.class, updateTodoStatusRequest.getStatus()), entityToUpdate.getDueDate(), LocalDateTime.now());
-            }
 
             entityToUpdate = repository.save(entityToUpdate);
             updatedResponse = mapper.map(entityToUpdate, TodoResponse.class);

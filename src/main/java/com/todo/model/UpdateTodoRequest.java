@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,5 +25,9 @@ public class UpdateTodoRequest {
     @FutureOrPresent(message = "Due Date must be present or Future")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dueDate;
+
+    @NotBlank(message = "status must not be null")
+    @Pattern(regexp = "DONE|NOT_DONE")
+    private String status;
 
 }

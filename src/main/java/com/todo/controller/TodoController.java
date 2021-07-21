@@ -3,7 +3,6 @@ package com.todo.controller;
 import com.todo.model.CreateTodoRequest;
 import com.todo.model.TodoResponse;
 import com.todo.model.UpdateTodoRequest;
-import com.todo.model.UpdateTodoStatusRequest;
 import com.todo.service.TodoService;
 import com.todo.type.TodoStatus;
 import lombok.RequiredArgsConstructor;
@@ -36,14 +35,9 @@ public class TodoController {
         return service.findById(id);
     }
 
-    @PutMapping("/status/{id}")
-    public TodoResponse updateStatus(@PathVariable Long id, @Valid @RequestBody UpdateTodoStatusRequest updateTodoStatusRequest) {
-        return service.updateStatusOrRequest(id, updateTodoStatusRequest, null);
-    }
-
     @PutMapping("/{id}")
     public TodoResponse update(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest updateTodoRequest) {
-        return service.updateStatusOrRequest(id, null, updateTodoRequest);
+        return service.update(id, updateTodoRequest);
     }
 
     @DeleteMapping("/{id}")
