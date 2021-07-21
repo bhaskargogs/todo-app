@@ -77,4 +77,8 @@ public class TodoService {
         return updatedResponse;
     }
 
+    public void delete(Long id) {
+        repository.delete(TodoUtils.findTodoById(repository, id).orElseThrow(() -> new NotFoundException("id", valueOf(id))));
+    }
+
 }
