@@ -57,7 +57,7 @@ public class TodoService {
         TodoEntity entityToUpdate = repository.getById(id);
         TodoResponse updatedResponse;
         try {
-            if (entityToUpdate.getStatus().equals(TodoStatus.PAST_DUE)) {
+            if (TodoStatus.PAST_DUE == entityToUpdate.getStatus()) {
                 throw new InvalidConstraintException("status", valueOf(entityToUpdate.getStatus()));
             }
             entityToUpdate = new TodoEntity(id, updateTodoRequest.getDescription(), entityToUpdate.getCreatedDate(),
